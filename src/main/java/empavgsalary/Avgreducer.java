@@ -7,6 +7,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 
 public class Avgreducer extends Reducer<Text,IntWritable,Text,IntWritable> {
+    int avg=0;
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -17,8 +18,9 @@ public class Avgreducer extends Reducer<Text,IntWritable,Text,IntWritable> {
         {
             s=s+obj.get();
             count++;
+            avg=(s/count);
 
         }
-        context.write(key,new IntWritable((s/count)));
+        context.write(key,new IntWritable(avg));
     }
 }
